@@ -1,166 +1,130 @@
 import { useState } from 'react';
-import {
-  LayoutGrid,
-  PenTool,
-  BarChart3,
-  Users,
-  Megaphone,
-  Camera,
-  ArrowUpRight,
-} from 'lucide-react';
-import { Reveal } from '@/components/Reveal';
+import { Plus } from 'lucide-react';
+import { Reveal, Rise } from '@/components/Reveal';
+import { SectionLabel } from '@/components/SectionLabel';
 
 const SERVICES = [
   {
-    icon: LayoutGrid,
-    title: 'Social Media Strategy',
+    title: 'Social media strategy',
+    summary: 'The plan everything else follows.',
     description:
-      'A comprehensive roadmap tailored to your brand — platform selection, posting cadence, content pillars, and growth milestones that align with business goals.',
-    deliverables: ['Audit & competitive analysis', 'Content pillar framework', '90-day roadmap', 'KPI definition'],
+      'Which platforms matter, what to post, how often and why. A roadmap built around your business goals with milestones you can hold me to.',
+    deliverables: ['Audit and competitor analysis', 'Content pillar framework', '90 day roadmap', 'KPI definitions'],
   },
   {
-    icon: PenTool,
-    title: 'Content Creation',
+    title: 'Content creation',
+    summary: 'Posts people stop for.',
     description:
-      'Scroll-stopping visuals, compelling copy, and video content that captures your brand voice. From concept to published post, fully managed.',
-    deliverables: ['Graphic design & carousels', 'Short-form video editing', 'Caption writing', 'Hashtag research'],
+      'Visuals, copy and short-form video in your brand voice, taken from concept to published post without you chasing anyone.',
+    deliverables: ['Graphics and carousels', 'Short-form video editing', 'Caption writing', 'Hashtag and keyword research'],
   },
   {
-    icon: BarChart3,
-    title: 'Analytics & Reporting',
+    title: 'Community management',
+    summary: 'Followers into advocates.',
     description:
-      'Monthly performance reports that go beyond vanity metrics. I translate data into clear, actionable recommendations for what to do next.',
-    deliverables: ['Monthly performance dashboards', 'Growth trend analysis', 'Audience insights', 'Actionable recommendations'],
+      'Communities are built by showing up every day. I handle comments, DMs and conversations so your audience always hears back.',
+    deliverables: ['Comment and DM management', 'Engagement playbook', 'Crisis response protocol', 'Community guidelines'],
   },
   {
-    icon: Users,
-    title: 'Community Management',
+    title: 'Paid social',
+    summary: 'Ad spend with a reason.',
     description:
-      'Building a loyal community means showing up daily. I handle comments, DMs, and engagement to turn passive followers into active advocates.',
-    deliverables: ['Comment & DM management', 'Engagement strategy', 'Crisis response protocols', 'Community guidelines'],
+      'Campaigns across Meta, TikTok and LinkedIn, from targeting and creative testing to weekly optimisation against cost per result.',
+    deliverables: ['Ad creative production', 'Audience segmentation', 'A/B testing framework', 'Budget pacing'],
   },
   {
-    icon: Megaphone,
-    title: 'Paid Social Campaigns',
+    title: 'Analytics and reporting',
+    summary: 'Numbers you can act on.',
     description:
-      'Targeted ad campaigns across Meta, TikTok, and LinkedIn. From audience targeting to creative testing to optimization — done right.',
-    deliverables: ['Ad creative production', 'Audience targeting & segmentation', 'A/B testing framework', 'Budget optimization'],
+      'Monthly reports that skip the vanity metrics and end with clear recommendations for the month ahead.',
+    deliverables: ['Monthly performance report', 'Growth trend analysis', 'Audience insights', 'Next month plan'],
   },
   {
-    icon: Camera,
-    title: 'Influencer Collaboration',
+    title: 'Influencer partnerships',
+    summary: 'Reach that feels earned.',
     description:
-      'Identifying, vetting, and managing influencer partnerships that deliver authentic reach and measurable ROI for your brand.',
-    deliverables: ['Influencer identification & vetting', 'Outreach & negotiation', 'Campaign management', 'Performance tracking'],
+      'Finding, vetting and managing creators whose audiences overlap with yours, with tracking that shows what each partnership returned.',
+    deliverables: ['Creator shortlist and vetting', 'Outreach and negotiation', 'Campaign management', 'Performance tracking'],
   },
 ];
 
 export function Services() {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="services" className="relative section-py overflow-hidden bg-ink-900/30">
-      {/* Background */}
-      <div className="absolute inset-0 bg-grid-pattern bg-[size:80px_80px] opacity-20" />
-      <div className="absolute left-1/2 top-0 h-px w-3/4 -translate-x-1/2 bg-gradient-to-r from-transparent via-azure-500/30 to-transparent" />
-
-      <div className="container-px relative z-10 mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-16 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
-          <div>
-            <Reveal className="mb-4 flex items-center gap-3">
-              <span className="h-px w-12 bg-azure-500" />
-              <span className="font-display text-xs font-semibold uppercase tracking-[0.25em] text-azure-400">
-                Services
-              </span>
-            </Reveal>
-            <Reveal delay={100}>
-              <h2 className="font-display text-display-lg font-bold text-white">
-                Everything your brand
-                <br />
-                needs to <span className="text-gradient-blue">show up right</span>.
-              </h2>
-            </Reveal>
+    <section id="services" className="section-py">
+      <div className="container-px">
+        <div className="mb-14 grid gap-8 md:mb-20 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <SectionLabel index="02" label="Services" className="mb-8" />
+            <Rise as="h2" text="What I can take *off your plate.*" className="font-display text-display-lg" />
           </div>
-          <Reveal variant="right" delay={200}>
-            <p className="max-w-sm text-base text-slate-400">
-              Full-service social media management or project-based engagements — scaled to
-              your needs, priced for your budget.
+          <Reveal className="self-end lg:col-span-4 lg:col-start-9">
+            <p className="text-base leading-relaxed text-muted">
+              Hire me for the full picture or for one piece of it. Every engagement starts with
+              a short call to work out which.
             </p>
           </Reveal>
         </div>
 
-        {/* Service grid */}
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((service, i) => (
-            <Reveal key={service.title} variant="up" delay={i * 80}>
-              <div
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                className={`group relative h-full overflow-hidden rounded-2xl border p-7 transition-all duration-500 ease-out-quint ${
-                  hovered === i
-                    ? 'border-azure-500/30 bg-white/[0.04]'
-                    : 'border-white/[0.06] bg-white/[0.02]'
-                }`}
-              >
-                {/* Glow on hover */}
+        <ul className="border-b border-fg/10">
+          {SERVICES.map((s, i) => {
+            const isOpen = open === i;
+            return (
+              <Reveal as="li" key={s.title} delay={i * 50} className="border-t border-fg/10">
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  aria-expanded={isOpen}
+                  aria-controls={`service-${i}`}
+                  className="group grid w-full grid-cols-[2.5rem_1fr_auto] items-baseline gap-x-4 py-7 text-left md:grid-cols-[4rem_1fr_1fr_auto] md:py-9"
+                >
+                  <span className="tabular text-xs text-muted">0{i + 1}</span>
+                  <span
+                    className={`font-display text-display-md transition-[transform,color] duration-500 ease-out-quint group-hover:translate-x-2 ${
+                      isOpen ? 'text-fg' : 'text-fg/70 group-hover:text-fg'
+                    }`}
+                  >
+                    {s.title}
+                  </span>
+                  <span className="hidden text-base text-muted md:block">{s.summary}</span>
+                  <span
+                    className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-[transform,background-color,border-color,color] duration-500 ease-out-quint ${
+                      isOpen ? 'rotate-45 border-fg bg-fg text-canvas no-halo' : 'border-fg/20 group-hover:border-fg'
+                    }`}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </span>
+                </button>
+
                 <div
-                  className={`absolute -right-20 -top-20 h-40 w-40 rounded-full bg-azure-500/10 blur-3xl transition-opacity duration-500 ${
-                    hovered === i ? 'opacity-100' : 'opacity-0'
-                  }`}
-                />
-
-                {/* Number */}
-                <div className="absolute right-6 top-6 font-display text-5xl font-bold text-white/[0.04] transition-colors duration-500 group-hover:text-azure-500/10">
-                  0{i + 1}
-                </div>
-
-                {/* Icon */}
-                <div className="relative mb-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-azure-500/20 to-azure-700/10 text-azure-400 transition-all duration-500 ease-out-quint group-hover:from-azure-500/30 group-hover:to-glow-500/20 group-hover:text-azure-300">
-                    <service.icon className="h-5 w-5" />
+                  id={`service-${i}`}
+                  className="grid transition-[grid-template-rows] duration-700 ease-out-quint"
+                  style={{ gridTemplateRows: isOpen ? '1fr' : '0fr' }}
+                >
+                  <div className="overflow-hidden">
+                    <div
+                      className={`grid gap-8 pb-10 transition-opacity duration-700 md:grid-cols-[4rem_1fr_1fr_auto] md:gap-x-4 ${
+                        isOpen ? 'opacity-100' : 'opacity-0'
+                      }`}
+                    >
+                      <span className="hidden md:block" />
+                      <p className="max-w-md text-base leading-relaxed text-muted">{s.description}</p>
+                      <ul className="space-y-2.5 text-sm">
+                        {s.deliverables.map((d) => (
+                          <li key={d} className="flex gap-3">
+                            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
+                            {d}
+                          </li>
+                        ))}
+                      </ul>
+                      <span className="hidden w-10 md:block" />
+                    </div>
                   </div>
                 </div>
-
-                {/* Content */}
-                <h3 className="relative mb-3 font-display text-xl font-semibold text-white">
-                  {service.title}
-                </h3>
-                <p className="relative mb-5 text-sm leading-relaxed text-slate-400">
-                  {service.description}
-                </p>
-
-                {/* Deliverables - reveal on hover */}
-                <div
-                  className={`relative overflow-hidden transition-all duration-500 ease-out-quint ${
-                    hovered === i ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className="border-t border-white/[0.06] pt-4">
-                    <ul className="space-y-2">
-                      {service.deliverables.map((d) => (
-                        <li key={d} className="flex items-center gap-2 text-xs text-slate-400">
-                          <span className="h-1 w-1 rounded-full bg-azure-400" />
-                          {d}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                {/* Arrow indicator */}
-                <div
-                  className={`relative mt-5 flex items-center gap-1.5 text-sm font-medium text-azure-400 transition-all duration-300 ${
-                    hovered === i ? 'translate-x-0 opacity-100' : '-translate-x-2 opacity-0'
-                  }`}
-                >
-                  Learn more
-                  <ArrowUpRight className="h-3.5 w-3.5" />
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+              </Reveal>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

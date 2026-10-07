@@ -6,10 +6,14 @@ interface UseRevealOptions {
   once?: boolean;
 }
 
+export function prefersReducedMotion() {
+  return typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 export function useReveal<T extends HTMLElement = HTMLDivElement>(
   options: UseRevealOptions = {}
 ) {
-  const { threshold = 0.15, rootMargin = '0px 0px -10% 0px', once = true } = options;
+  const { threshold = 0.15, rootMargin = '0px 0px -8% 0px', once = true } = options;
   const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -36,67 +40,48 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>(
   return { ref, isVisible };
 }
 
-export function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const onScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(docHeight > 0 ? scrollTop / docHeight : 0);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  return progress;
-}
-
-export function useActiveSection(sectionIds: string[]) {
+export function useActiveSection(sectionIds: readonly string[]) {
   const [activeId, setActiveId] = useState(sectionIds[0] ?? '');
+  const key = sectionIds.join(',');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
+          if (entry.isIntersecting) setActiveId(entry.target.id);
         });
       },
-      { rootMargin: '-40% 0px -55% 0px' }
+      { rootMargin: '-45% 0px -50% 0px' }
     );
 
-    sectionIds.forEach((id) => {
+    key.split(',').forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
 
     return () => observer.disconnect();
-  }, [sectionIds]);
+  }, [key]);
 
   return activeId;
 }
 
-export function useCountUp(target: number, duration = 2000, start = false) {
+export function useCountUp(target: number, duration = 1800, start = false) {
   const [count, setCount] = useState(0);
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (!start) return;
+    if (prefersReducedMotion()) {
+      setCount(target);
+      return;
+    }
 
     const startTime = performance.now();
     const animate = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.floor(eased * target));
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(animate);
-      } else {
-        setCount(target);
-      }
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.round(eased * target));
+      if (progress < 1) rafRef.current = requestAnimationFrame(animate);
     };
 
     rafRef.current = requestAnimationFrame(animate);
@@ -106,16 +91,17 @@ export function useCountUp(target: number, duration = 2000, start = false) {
   return count;
 }
 
-export function useMousePosition() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
+/** Current time in a given IANA zone, refreshed every 15 seconds. */
+export function useZonedTime(timeZone: string) {
+  const format = () =>
+    new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date());
+  const [time, setTime] = useState(format);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      setPos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', onMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
+    const id = setInterval(() => setTime(format()), 15000);
+    return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeZone]);
 
-  return pos;
+  return time;
 }

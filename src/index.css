@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --paper: 238 234 226;
-  --sand: 228 223 213;
-  --ink: 20 19 17;
-  --stone: 110 104 94;
-  --accent: 216 57 29;
-  --accent-soft: 255 112 84;
+  --canvas: 4 6 13;
+  --surface: 10 14 26;
+  --fg: 236 238 243;
+  --muted: 168 175 192;
+  --accent: 96 165 250;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: dark;
 }
 
 @layer base {
@@ -21,12 +21,23 @@
   }
 
   body {
-    @apply bg-paper font-sans text-ink antialiased;
+    @apply bg-canvas font-sans text-fg antialiased;
     overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    /* Dark halo keeps text legible when a balloon drifts behind it; invisible on the plain background */
+    text-shadow: 0 0 18px rgb(var(--canvas) / 0.9), 0 0 4px rgb(var(--canvas) / 0.7);
+  }
+
+  /* Dark text on light fills must not carry the halo */
+  .btn,
+  .no-halo,
+  .no-halo * {
+    text-shadow: none;
   }
 
   ::selection {
-    @apply bg-accent text-paper;
+    @apply bg-accent text-canvas;
   }
 
   :focus-visible {
@@ -45,12 +56,15 @@
   }
 
   .section-py {
-    @apply py-28 md:py-40;
+    @apply py-20 sm:py-28 lg:py-40;
   }
 
-  /* Buttons: a flat colour fill wipes up from below on hover */
+  /*
+   * Buttons. Base styles target touch: a 52px target and a press-down on tap.
+   * The colour wipe only runs where a real pointer can hover.
+   */
   .btn {
-    @apply relative inline-flex items-center justify-center gap-3 overflow-hidden rounded-full px-7 py-4 text-sm font-medium;
+    @apply relative inline-flex min-h-[3.25rem] items-center justify-center gap-3 overflow-hidden rounded-full px-7 py-4 text-sm font-medium;
     isolation: isolate;
     transition: color 0.5s var(--ease), border-color 0.5s var(--ease), transform 0.3s var(--ease);
   }
@@ -62,39 +76,32 @@
     transform: translateY(102%);
     transition: transform 0.55s var(--ease);
   }
-  .btn:hover::before,
-  .btn:focus-visible::before {
-    transform: translateY(0);
-  }
   .btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
   .btn svg {
     transition: transform 0.5s var(--ease);
   }
-  .btn:hover svg {
-    transform: translate(2px, -2px);
-  }
 
   .btn-solid {
-    @apply bg-ink text-paper hover:text-paper;
+    @apply bg-fg text-canvas;
   }
   .btn-solid::before {
     @apply bg-accent;
   }
 
   .btn-outline {
-    @apply border border-ink/30 text-ink hover:border-ink hover:text-paper;
+    @apply border border-fg/25 text-fg;
   }
   .btn-outline::before {
-    @apply bg-ink;
+    @apply bg-fg;
   }
 
-  .btn-light {
-    @apply bg-paper text-ink hover:text-paper;
+  .btn:focus-visible::before {
+    transform: translateY(0);
   }
-  .btn-light::before {
-    @apply bg-accent;
+  .btn-outline:focus-visible {
+    @apply border-fg text-canvas;
   }
 
   /* Underline that draws in from the left and exits to the right */
@@ -105,10 +112,25 @@
     background-size: 0% 1px;
     transition: background-size 0.5s var(--ease);
   }
-  .link-underline:hover,
   .link-underline:focus-visible {
     background-position: 0 100%;
     background-size: 100% 1px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn:hover::before {
+      transform: translateY(0);
+    }
+    .btn:hover svg {
+      transform: translate(2px, -2px);
+    }
+    .btn-outline:hover {
+      @apply border-fg text-canvas;
+    }
+    .link-underline:hover {
+      background-position: 0 100%;
+      background-size: 100% 1px;
+    }
   }
 }
 
@@ -130,6 +152,22 @@
   }
   .reveal-fade.is-visible {
     opacity: 1;
+  }
+
+  /* Image reveal: a clip that opens upward while the image settles */
+  .reveal-image {
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 1.4s var(--ease);
+  }
+  .reveal-image img {
+    transform: scale(1.15);
+    transition: transform 1.8s var(--ease);
+  }
+  .reveal-image.is-visible {
+    clip-path: inset(0 0 0 0);
+  }
+  .reveal-image.is-visible img {
+    transform: scale(1);
   }
 
   /* Masked word rise, used on headlines */
@@ -154,8 +192,25 @@
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
 
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   .tabular {
     font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Testimonial timer bar */
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 
@@ -165,9 +220,12 @@
   }
   .reveal,
   .reveal-fade,
-  .rise-inner {
+  .rise-inner,
+  .reveal-image,
+  .reveal-image img {
     opacity: 1;
     transform: none;
+    clip-path: none;
     transition: none;
   }
   .animate-marquee {

@@ -1,36 +1,20 @@
-const PLATFORMS = [
-  'Instagram',
-  'TikTok',
-  'LinkedIn',
-  'YouTube',
-  'Twitter / X',
-  'Facebook',
-  'Pinterest',
-  'Threads',
-  'Snapchat',
-  'Google Analytics',
-  'Meta Ads',
-  'Canva Pro',
-  'Later',
-  'Buffer',
-  'Sprout Social',
-  'Figma',
-];
+const PLATFORMS = ['Instagram', 'TikTok', 'LinkedIn', 'YouTube', 'X', 'Pinterest', 'Threads', 'Meta Ads', 'Snapchat', 'Facebook'];
 
 export function Marquee() {
   return (
-    <div className="relative border-y border-white/[0.05] bg-ink-900/50 py-6">
-      <div className="mask-fade-edges overflow-hidden">
-        <div className="flex w-max animate-marquee items-center gap-12">
+    <div className="group relative overflow-hidden border-y border-fg/10 py-6 md:py-8" aria-label="Platforms I work on">
+      <div className="mask-fade-edges">
+        <div className="flex w-max animate-marquee items-center group-hover:[animation-play-state:paused]">
           {[...PLATFORMS, ...PLATFORMS].map((platform, i) => (
-            <div
-              key={`${platform}-${i}`}
-              className="flex items-center gap-3 whitespace-nowrap"
-            >
-              <span className="h-1 w-1 rounded-full bg-azure-500/50" />
-              <span className="font-display text-sm font-medium uppercase tracking-wider text-slate-500 transition-colors hover:text-slate-300">
+            <div key={`${platform}-${i}`} className="flex items-center" aria-hidden={i >= PLATFORMS.length}>
+              <span
+                className={`whitespace-nowrap px-8 font-display text-4xl md:px-12 md:text-6xl ${
+                  i % 2 ? 'italic text-muted' : 'text-fg'
+                }`}
+              >
                 {platform}
               </span>
+              <span className="h-2 w-2 rounded-full bg-accent" />
             </div>
           ))}
         </div>
