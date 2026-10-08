@@ -1,9 +1,9 @@
 import { useCountUp, useReveal } from '@/hooks/useScrollAnimations';
 
 const STATS = [
-  { value: 3.2, decimals: 1, suffix: 'M', label: 'People reached across client accounts' },
-  { value: 22, suffix: '+', label: 'Brands managed, from startups to established names' },
-  { value: 70, suffix: '+', label: 'Campaigns launched with measurable goals' },
+  { value: 1.2, decimals: 1, suffix: 'M', label: 'People reached across client accounts' },
+  { value: 12, suffix: '+', label: 'Brands managed, from startups to growing businesses' },
+  { value: 35, suffix: '+', label: 'Campaigns launched with measurable goals' },
   { value: 3, suffix: ' yrs', label: 'Working in social media' },
 ];
 
