@@ -1,10 +1,10 @@
 import { useCountUp, useReveal } from '@/hooks/useScrollAnimations';
 
 const STATS = [
-  { value: 5, suffix: 'M', label: 'People reached across client accounts' },
-  { value: 40, suffix: '+', label: 'Brands managed, from startups to established names' },
-  { value: 120, suffix: '+', label: 'Campaigns launched with measurable goals' },
-  { value: 6, suffix: ' yrs', label: 'Working in social media' },
+  { value: 3.2, decimals: 1, suffix: 'M', label: 'People reached across client accounts' },
+  { value: 22, suffix: '+', label: 'Brands managed, from startups to established names' },
+  { value: 70, suffix: '+', label: 'Campaigns launched with measurable goals' },
+  { value: 3, suffix: ' yrs', label: 'Working in social media' },
 ];
 
 // Hairline dividers for a 2x2 grid on mobile that becomes a single row on desktop
@@ -31,23 +31,27 @@ export function Stats() {
 
 function Stat({
   value,
+  decimals = 0,
   suffix,
   label,
   index,
   start,
 }: {
   value: number;
+  decimals?: number;
   suffix: string;
   label: string;
   index: number;
   start: boolean;
 }) {
-  const count = useCountUp(value, 1800, start);
+  // Count in whole steps of the smallest decimal place, e.g. 0 to 32 for 3.2
+  const scale = 10 ** decimals;
+  const count = useCountUp(Math.round(value * scale), 1800, start);
 
   return (
     <div className={`flex flex-col justify-between gap-10 border-fg/10 py-12 md:py-16 ${CELL_BORDERS[index]}`}>
       <div className="tabular font-display text-[clamp(3.5rem,7vw,6.5rem)] leading-none tracking-[-0.03em]">
-        {count}
+        {(count / scale).toFixed(decimals)}
         <span className="text-accent">{suffix}</span>
       </div>
       <p

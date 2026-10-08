@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { useActiveSection } from '@/hooks/useScrollAnimations';
 import { onAnchorClick } from '@/lib/scroll';
+import { EMAIL } from '@/lib/site';
 
 const NAV_LINKS = [
   { id: 'about', label: 'About' },
@@ -133,7 +134,9 @@ export function Navbar() {
           ))}
         </ul>
         <div className="container-px flex items-center justify-between gap-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-2 text-sm text-muted">
-          <a href="mailto:hello@mercyubachukwu.com" tabIndex={open ? 0 : -1}>hello@mercyubachukwu.com</a>
+          <a href={`mailto:${EMAIL}`} tabIndex={open ? 0 : -1} className="truncate">
+            {EMAIL}
+          </a>
           <span>Lagos, NG</span>
         </div>
       </div>

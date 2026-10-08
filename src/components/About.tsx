@@ -37,7 +37,7 @@ export function About() {
           <div className="lg:col-span-6 lg:col-start-7">
             <Reveal>
               <p className="text-2xl leading-snug md:text-[1.75rem]">
-                For six years I've helped founders and established companies find a voice on
+                For three years I've helped founders and established companies find a voice on
                 social that people actually listen to.
               </p>
             </Reveal>

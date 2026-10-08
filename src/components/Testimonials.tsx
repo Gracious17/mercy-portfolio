@@ -5,25 +5,25 @@ import { SectionLabel } from '@/components/SectionLabel';
 const TESTIMONIALS = [
   {
     quote:
-      'Within four months our Instagram engagement went from 1.2% to 7.8%. Mercy doesn’t just post. She plans, measures and delivers.',
+      'In six months our Instagram engagement went from 1.8% to 5.4%. Mercy doesn’t just post. She plans, measures and delivers.',
     author: 'Sarah Chen',
     role: 'Founder, Bloom Skincare',
   },
   {
     quote:
-      'She took our scattered efforts and turned them into a strategy we could actually follow. Our TikTok went from 800 followers to 15,000 in three months.',
+      'She took our scattered efforts and turned them into a strategy we could actually follow. Our TikTok went from 1,300 followers to 4,000 in four months.',
     author: 'Marcus Reid',
     role: 'Owner, Forge Fitness',
   },
   {
     quote:
-      'The rare social media manager who understands business goals. She tied our LinkedIn to the sales pipeline and brought in 45 qualified leads in a quarter.',
+      'The rare social media manager who understands business goals. She tied our LinkedIn to the sales pipeline and brought in 18 qualified leads in a quarter.',
     author: 'David Okafor',
     role: 'Partner, Atlas Consulting',
   },
   {
     quote:
-      'Zero to sold out in eight weeks. The launch was so precise we couldn’t keep up with demand.',
+      'Our first batch sold out twelve weeks after launch. Mercy planned every step and kept us calm the whole way.',
     author: 'Elena Rossi',
     role: 'Co-founder, Casa Verde',
   },

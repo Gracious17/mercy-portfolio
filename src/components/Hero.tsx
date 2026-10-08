@@ -89,7 +89,7 @@ export function Hero() {
             </div>
             <figcaption {...fadeIn(1100, 'mt-4 flex items-baseline justify-between text-xs uppercase tracking-[0.16em] text-muted')}>
               <span>Mercy Ubachukwu</span>
-              <span>Six years in social</span>
+              <span>Three years in social</span>
             </figcaption>
           </figure>
         </div>

@@ -1,4 +1,4 @@
-const PLATFORMS = ['Instagram', 'TikTok', 'LinkedIn', 'YouTube', 'X', 'Pinterest', 'Threads', 'Meta Ads', 'Snapchat', 'Facebook'];
+const PLATFORMS = ['Instagram', 'TikTok', 'LinkedIn', 'YouTube', 'X', 'Threads', 'Meta Ads', 'Facebook'];
 
 export function Marquee() {
   return (

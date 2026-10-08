@@ -3,11 +3,11 @@ import { ArrowUpRight } from 'lucide-react';
 import { Reveal, Rise } from '@/components/Reveal';
 import { SectionLabel } from '@/components/SectionLabel';
 import { Portrait } from '@/components/Portrait';
+import { EMAIL } from '@/lib/site';
 
-const EMAIL = 'hello@mercyubachukwu.com';
 
 const SERVICES = ['Strategy', 'Content', 'Community', 'Paid social', 'Reporting', 'Influencers', 'Everything'];
-const BUDGETS = ['Under $1k', '$1k to $3k', '$3k to $5k', '$5k+'];
+const BUDGETS = ['Under $300', '$300 to $600', '$600 to $1,000', '$1,000+'];
 
 type Form = { name: string; email: string; company: string; message: string };
 const EMPTY: Form = { name: '', email: '', company: '', message: '' };
